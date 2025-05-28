@@ -1,32 +1,20 @@
 import { Router } from 'express';
-import { data } from '../data';
+import {getNotes} from "../controllers/notes/getNotes";
+import {getNoteById} from "../controllers/notes/getNoteById";
+import {postNote} from "../controllers/notes/postNote";
+import {deleteNote} from "../controllers/notes/deleteNote";
+import {updateNote} from "../controllers/notes/updateNote";
 
 const userNotes = Router();
 
-userNotes.get('/notes', (req, res) => {
-    res.status(200).json(data);
-});
+userNotes.get('/notes', getNotes);
 
-userNotes.get('/notes/:id', (req, res) => {
-    const id = Number(req.params.id);
-    const note = data.find(note => note.id === id);
+userNotes.get('/notes/:id', getNoteById);
 
-    if (!note) {
-        res.status(404).send('Not Found');
-    } else {
-        res.status(200).json(note);
-    }
-});
+userNotes.post('/notes', postNote);
 
-userNotes.post('/notes', (req, res) => {
-    const {title, body} = req.body;
-    if(!title || !body) {
-        res.status(400).send('Please enter a title');
-        return;
-    } else {
-        data.push({id: data.length + 1, body, title})
-        res.status(200).send('Заметка добавлена');
-    }
-})
+userNotes.delete('/notes/:id', deleteNote);
+
+userNotes.put('/notes/:id', updateNote);
 
 export default userNotes;
