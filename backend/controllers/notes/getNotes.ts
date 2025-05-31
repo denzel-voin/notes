@@ -1,7 +1,9 @@
 import {Request, Response} from "express";
-import {readData} from "../../utils";
+import {PrismaClient} from '@prisma/client';
+const prisma = new PrismaClient();
 
-export const getNotes = (req: Request, res: Response) => {
-    const data = readData();
-    res.status(200).json(data);
+export const getNotes = async (req: Request, res: Response) => {
+    const notes = await prisma.note.findMany();
+    res.json(notes);
+
 }
