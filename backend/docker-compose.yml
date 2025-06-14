@@ -19,6 +19,9 @@ services:
       - "3000:3000"
     environment:
       DATABASE_URL: "postgresql://postgres:postgres@db:5432/notesdb"
+    volumes:
+      - .:/app
+      - /app/node_modules
 
 volumes:
   postgres_data:

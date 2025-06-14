@@ -1,0 +1,5 @@
+{
+  "watch": ["src", "prisma"],
+  "ext": "ts",
+  "exec": "npx prisma generate && ts-node server.ts"
+}

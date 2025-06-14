@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import userNotes from './routes/notes';
+import usersRouter from "./routes/users";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/api', userNotes);
+app.use('/api', usersRouter);
 
 app.listen(PORT, () => {
     console.log(`✅ Сервер запущен на порту: ${PORT}`);
