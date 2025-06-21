@@ -38,9 +38,7 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
 
-  document.title = to.meta.title ? `${to.meta.title} | Мое приложение` : 'Мое приложение'
-
-  if (to.meta.requiresAuth && !!authStore.isAuthenticated) {
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next({
       path: '/auth',
       query: { redirect: to.fullPath }
@@ -48,12 +46,13 @@ router.beforeEach(async (to, from, next) => {
     return
   }
 
-  if (to.meta.onlyForGuests && !authStore.isAuthenticated) {
+  if (to.meta.onlyForGuests && authStore.isAuthenticated()) {
     next('/')
     return
   }
 
   next()
 })
+
 
 export default router
